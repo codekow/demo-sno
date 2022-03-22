@@ -1,0 +1,31 @@
+#!ipxe
+
+set base_http http://${next-server}:81/pxe
+set base_tftp tftp://${next-server}
+set base_url ${base_http}
+
+:rhcos-pxe
+set pxe_path rhcos
+set ocp_path ocp
+set node_type worker
+
+echo RHCOS Install - ${node_type}
+echo Starting in 10 seconds...
+sleep 10
+
+set kernel_url ${base_url}/${pxe_path}/rhcos-installer-kernel-x86_64
+set initrd_url ${base_url}/${pxe_path}/rhcos-installer-initramfs.x86_64.img
+set rootfs_url ${base_url}/${pxe_path}/rhcos-installer-rootfs.x86_64.img
+set install_dev /dev/sda
+set ignition_url ${base_url}/${ocp_path}/${node_type}.ign
+
+set kernel_args random.trust_cpu=on ignition.firstboot ignition.platform.id=metal
+set kernel_args ${kernel_args} coreos.live.rootfs_url=${rootfs_url}
+set kernel_args ${kernel_args} coreos.inst.install_dev=${install_dev}
+set kernel_args ${kernel_args} coreos.inst.ignition_url=${ignition_url}
+
+kernel --name kernel ${kernel_url}
+initrd --name initrd ${initrd_url}
+imgargs kernel initrd=initrd ${kernel_args} 
+boot
+
