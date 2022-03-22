@@ -1,5 +1,10 @@
 # Single Node OpenShift (SNO)
 
+## Set ClusterID
+```
+ oc edit clusterversions.config.openshift.io
+```
+
 ## Setup `oc` from dump dir
 ```
 export KUBECONFIG=$(pwd)/dump/sno/auth/kubeconfig
