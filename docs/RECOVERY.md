@@ -1,6 +1,9 @@
 # Single Node OpenShift (SNO)
 
 ## Set ClusterID
+
+See `manifests/cvo-overrides.yaml`
+
 ```
  oc edit clusterversions.config.openshift.io
 ```
