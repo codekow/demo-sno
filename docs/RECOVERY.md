@@ -54,6 +54,16 @@ export KUBECONFIG=/etc/kubernetes/static-pod-resources/kube-apiserver-certs/secr
 oc get csr -o name | xargs -n1 oc adm certificate approve
 ```
 
+## Recover OpenShift apiserver
+
+`openshift-apiserver is down; error "x509: certificate signed by unknown authority" in pod logs`
+
+```
+# force cert rotation in the openshift-kube-apiserver namespace
+
+oc get secret -n openshift-kube-apiserver -A -o json | jq -r '.items[] | select(.metadata.annotations."auth.openshift.io/certificate-not-after" | .!=null and fromdateiso8601<='$( date --date='+1year' +%s )') | "-n \(.metadata.namespace) \(.metadata.name)"' | xargs -n3 oc patch secret -p='{"metadata": {"annotations": {"auth.openshift.io/certificate-not-after": null}}}'
+```
+
 ## Reset kubeadmin password
 ```
 Actual Password: eNaQD-5f5d2-jx9xn-LifvD
