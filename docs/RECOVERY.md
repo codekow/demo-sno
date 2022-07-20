@@ -51,6 +51,7 @@ cp /tmp/etcd-pod.yaml /etc/kubernetes/manifests/etcd-pod.yaml
 ```
 export KUBECONFIG=/etc/kubernetes/static-pod-resources/kube-apiserver-certs/secrets/node-kubeconfigs/localhost-recovery.kubeconfig
 
+# oc --insecure-skip-tls-verify=true
 oc get csr -o name | xargs -n1 oc adm certificate approve
 ```
 
