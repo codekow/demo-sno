@@ -45,9 +45,9 @@ Note: The ignition generated at the https://10.0.0.182:22623/config/worker is v2
 }
 ```
 
-## Create a custom ISO
+## Create a custom ISO for expansion
 ```
-coreos-installer iso ignition embed -i worker.ign -o worker.iso -f rhcos-custom.iso
+coreos-installer iso ignition embed -i master.ign -o master.iso -f rhcos-custom.iso
 coreos-installer iso ignition embed -i worker.ign -o worker.iso -f rhcos-custom.iso
 ```
 
