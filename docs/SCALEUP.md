@@ -14,10 +14,13 @@ machine configure URIs:
 # dump control ign
 oc extract secrets/master-user-data -n openshift-machine-api --keys=userData --to=- > master.ign
 # dump worker ign
-oc extract secrets/master-user-data -n openshift-machine-api --keys=userData --to=- > worker.ign
+oc extract secrets/worker-user-data -n openshift-machine-api --keys=userData --to=- > worker.ign
 ```
 
-Example OpenShift Ignition
+Example OpenShift Wrapped Ignition from secrets/worker-user-data
+
+Note: The ignition generated at the https://10.0.0.182:22623/config/worker is v2 and is wrapped in an ignition v3 config below
+
 ```
 {
   "ignition": {
